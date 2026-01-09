@@ -1,0 +1,219 @@
+output-file     = def2-TZVPP_OER_C96.svg
+width           = 240
+height          = 200
+energy-units    = Free energy  (eV)
+energy range      = -0.25,7.1
+font size       = 7
+
+#   This is a comment. Lines that begin with a # are ignored.
+#   Available colours are those accepted by matplotlib
+# ['#0173b2', '#de8f05', '#029e73', '#d55e00', '#cc78bc', '#ca9161', '#fbafe4', '#949494', '#ece133', '#56b4e9']
+
+#   This is an input example.
+#   {
+#       name        = reactants
+#       text-colour = black
+#       label       = CH$_3$O$\cdot$ + X
+#       energy      = 0.0
+#       labelColour = black
+#       linksto     = pre-react1:#0173b2, transition2:#de8f05, pre-react3:#029e73
+#       column      = 1
+#       legend      = Catalyst 1
+#       labelOffset = 0,1
+#       textOffset  = 0,1.4
+#       hide energy
+#   }
+
+#   Now begins the states input
+
+#-------  Path 1 ----------
+
+#   Add the first path, all paths are relative to the reactant energies so
+#   start at zero
+
+{
+    name        = O2
+    text-colour = #202020
+    label       = O$_2$
+    labelOffset = 0.5,0
+    energy      = 5.53657269
+    labelColour = black
+    column      = 6
+    hide energy
+}
+
+{
+    name        = O2_C70
+    text-colour = #0173b2
+    energy      = 6.33381911
+    linksto     = O2:#0173b2
+    column      = 5
+    hide energy
+}
+
+{
+    name        = OOH_C70
+    text-colour = #0173b2
+    energy      = 4.76751137
+    labelColour = black
+    linksto     = O2_C70:#0173b2
+    column      = 4
+    hide energy
+}
+
+{
+    name        = O_C70
+    text-colour = #0173b2
+    energy      = 2.85721722
+    labelColour = black
+    linksto     = OOH_C70:#0173b2
+    column      = 3
+    hide energy
+}
+
+{
+    name        = OH_C70
+    text-colour = #0173b2
+    energy      = 1.29476358
+    labelColour = black
+    linksto     = O_C70:#0173b2
+    column      = 2
+    legend      = Site 3_0
+    hide energy
+}
+
+#   All the paths in this practical end at the same energy… why?
+
+{
+    name        = products
+    text-colour = #202020
+    label       = OH-
+    labelOffset = 0.5,-0.05
+    energy      = 0.0
+    labelColour = black
+    linksto     = OH_C70:#0173b2, OH_C96:#029e73, id_4:#cc78bc
+    column      = 1
+    hide energy
+}
+#--------  Path 2 -------------
+{
+    name        = O2_C96
+    text-colour = #029e73
+    label       = $^*\!$O$_2$
+    labelOffset = 0.45,0
+    energy      = 6.46052539
+    labelColour = black
+    linksto     = O2:#029e73
+    column      = 5
+    hide energy
+}
+
+{
+    name        = OOH_C96
+    text-colour = #029e73
+    label       = $^*\!$OOH
+    labelOffset = 0.4,-0.05
+    energy      = 4.84895411
+    linksto     = O2_C96:#029e73
+    column      = 4
+    hide energy
+}
+
+{
+    name        = O_C96
+    text-colour = #029e73
+    label       = $^*\!$O
+    labelOffset = 0.4,-0.05
+    energy      = 2.99189412
+    linksto     = OOH_C96:#029e73
+    column      = 3
+    hide energy
+}
+
+{
+    name        = OH_C96
+    text-colour = #029e73
+    label       = $^*\!$OH
+    labelOffset = 0.45,-0.05
+    energy      = 1.38664895
+    linksto     = O_C96:#029e73
+    column      = 2
+    legend      = Site 3_1
+    hide energy
+}
+
+#-------  Path 3 -----------
+#{
+#    name        = O2_C100
+#    text-colour = #d55e00
+#    energy      = 6.61033576
+#    linksto     = O2:#d55e00
+#    column      = 5
+#    hide energy
+#}
+#
+#{
+#    name        = OOH_C100
+#    text-colour = #d55e00
+#    energy      = 4.99873259
+#    linksto     = O2_C100:#d55e00
+#    column      = 4
+#    hide energy
+#}
+#
+#{
+#    name        = O_C100
+#    text-colour = #d55e00
+#    energy      = 3.16204432
+#    linksto     = OOH_C100:#d55e00
+#    column      = 3
+#    hide energy
+#}
+#
+#{
+#    name        = OH_C100
+#    text-colour = #d55e00
+#    energy      = 1.51564635
+#    linksto     = O_C100:#d55e00
+#    column      = 2
+#    legend      = Site 3_1
+#    hide energy
+#}
+
+#-------  Path 4 -----------
+{
+    name        = id_1
+    text-colour = #cc78bc
+    energy      = 5.536572692
+    linksto     = O2:#cc78bc
+    column      = 5
+    hide energy
+}
+
+{
+    name        = id_2
+    text-colour = #cc78bc
+    energy      = 4.152429519
+    linksto     = id_1:#cc78bc
+    column      = 4
+    hide energy
+}
+
+{
+    name        = id_3
+    text-colour = #cc78bc
+    energy      = 2.768286346
+    linksto     = id_2:#cc78bc
+    column      = 3
+    hide energy
+}
+
+{
+    name        = id_4
+    text-colour = #cc78bc
+    energy      = 1.384143173
+    linksto     = id_3:#cc78bc
+    column      = 2
+    legend      = Ideal
+    hide energy
+}
