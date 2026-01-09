@@ -67,7 +67,7 @@ class Diagram:
 #   Draw the states
         for key in self.statesList.keys():
             state = self.statesList[key]
-            self.ax.plot([state.leftPointx, state.rightPointx], [state.leftPointy, state.rightPointy], c=state.color, lw=3, ls='-', label=state.legend)
+            self.ax.plot([state.leftPointx, state.rightPointx], [state.leftPointy, state.rightPointy], c=state.color, lw=0.75, ls='-', label=state.legend, solid_capstyle='round')
 
 #   Draw their labels
         offset = self.ax.get_ylim()
@@ -79,7 +79,7 @@ class Diagram:
                 self.ax.annotate(
                     state.label,
                     (state.leftPointx + state.labelOffset[0], y_point),
-                    color=state.labelColor,
+                    color=state.labelColor, horizontalalignment='center',
                     verticalalignment='bottom', annotation_clip=True)
 
             y_point = state.leftPointy + state.textOffset[1] - offset
@@ -143,14 +143,18 @@ class Diagram:
                         color = 'BLACK'
                     if dest in self.statesList:
                         self.ax.plot([state.rightPointx, self.statesList[dest].leftPointx], [state.rightPointy, self.statesList[dest].leftPointy],
-                            c=color, ls='--', lw=1)
+                            c=color, ls=(0,(5,5)), lw=0.5, dash_capstyle='round')
                     else:
                         print("Name: " + dest + " is unknown.")
 
+        self.ax.set_xlabel("Reaction coordinate")
         self.ax.set_ylabel(str(self.energyUnits))
         if self.y_lims is not None:
             self.ax.set_ylim(self.y_lims)
         self.ax.set_xticks([])
+        self.ax.minorticks_on()
+        self.ax.tick_params(which='major',length=4)
+        self.ax.tick_params(which='minor',length=2)
         if self.do_legend:
             self.ax.legend()
 
@@ -304,19 +308,19 @@ def ReadInput(filename):
                     raw[1] = raw[1].strip().lstrip()
                     if (raw[0] == "WIDTH"):
                         try:
-                            width = int(raw[1])
+                            width = int(raw[1])/72
                         except ValueError:
                             print("ERROR: Could not read integer for diagram width on line " + str(lc)+ ":\n\t"+line)
                     elif (raw[0] == "HEIGHT"):
                         try:
-                            height = int(raw[1])
+                            height = int(raw[1])/72
                         except ValueError:
                             print("ERROR: Could not read integer for diagram height on line " + str(lc)+ ":\n\t"+line)
                     elif (raw[0] == "OUTPUT-FILE" or raw[0] == "OUTPUT"):
                         raw[1] = raw[1].lstrip()
-                        if ( not raw[1].endswith('.pdf')):
-                            print("WARNING: Output will be .pdf. Adding this to output file.\nFile will be saved as "+raw[1] + ".pdf")
-                            outName = raw[1] + ".pdf"
+                        if ( not raw[1].endswith('.svg')):
+                            print("WARNING: Output will be .svg. Adding this to output file.\nFile will be saved as "+raw[1] + ".svg")
+                            outName = raw[1] + ".svg"
                         else:
                             outName = raw[1]
                     elif (raw[0] == "ENERGY-UNITS" or raw[0] == "ENERGYUNITS" or raw[0] == "ENERGY UNITS"):
@@ -347,7 +351,7 @@ def ReadInput(filename):
         print("ERROR: Image width not set! e.g.:\nwidth = 500")
         raise ValueError("Width not set")
     if outName == "":
-        print("ERROR: output file name not set! e.g.:\n output-file = example.pdf")
+        print("ERROR: output file name not set! e.g.:\n output-file = example.svg")
         raise ValueError("Output name not set")
 
     outDiagram = Diagram(width, height, fontSize, outName, y_lims)
@@ -369,7 +373,7 @@ def ReadInput(filename):
 def MakeExampleFile():
     output = open("example.inp", 'w')
 
-    output.write("output-file     = example.pdf"
+    output.write("output-file     = example.svg"
         "\nwidth           = 8"
         "\nheight          = 8"
         "\nenergy-units    = $\\Delta$E  kJ/mol"
